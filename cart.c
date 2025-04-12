@@ -51,6 +51,9 @@ int main(int arc, char ** argv){
 
         cart.roms_data[i] = ch;
     }
+    
+    // printing the header
+
     printf("Title: %s\n", cart.Title);
     printf("cgb: %x\n", cart.cgb);
     printf("manf: %s\t %02x\n", getmanif[cart.manif], cart.manif);
@@ -58,14 +61,14 @@ int main(int arc, char ** argv){
     printf("type: %d\n", cart.type);
     printf("size: %dkib\t%d\n", 32 * (1 << cart.size), cart.size);
     u8 checksum = 0;
-    for (u16 address = 0x0134; address <= 0x014C; address++) {
+    for (u16 address = (u16)0x0134; address <= (u16)0x014C; address++) {
         checksum = checksum - cart.roms_data[address] - 1;
     }
     printf("verfy checksum : %x\n", cart.roms_data[0x14D]);
     printf("Checksum : %x\n", checksum);
     // printf("op : %x %x\n", cart.roms_data[0x28b], cart.roms_data[(u16) (cart.roms_data[0x0102] | (cart.roms_data[0x0103] << 8)) + 1]);
     int i;
-    u16 addr = 0x0100;
+    u16 addr = (u16)0x0100;
     while(i < 400){
         if(cart.roms_data[addr] == 0xc3){ 
            printf("0x%.2x op : %x afop: %x\n", addr,cart.roms_data[addr], (u16) (cart.roms_data[addr + 1] | (cart.roms_data[addr + 2] << 8))); 
