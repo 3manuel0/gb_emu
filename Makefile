@@ -5,7 +5,7 @@ CFLAGS = -Wall -Wextra -std=c11
 OBJS = main.o cart.o cpu.o
 
 # Output binary name
-TARGET = main
+TARGET = gb
 
 # Default target
 all: $(TARGET)

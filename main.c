@@ -9,7 +9,7 @@ int main(int arc, char ** argv){
     }
     CART cart = load_cart(argv[1]);
     //printing the first 400 instraction starting from 0x100
-    sleep(10);
+    // sleep(10);
     // printf("printing the first 400 instraction starting from 0x100\n");
     // int i;
     // u16 addr = 0x0100;
@@ -24,6 +24,6 @@ int main(int arc, char ** argv){
 
     //     i++;
     // }
-    // free(cart.roms_data);
+    free(cart.roms_data);
     return 0;
 }
