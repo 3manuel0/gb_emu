@@ -1,13 +1,16 @@
 #include "cart.h"
-
-
+#include "cpu.h"
+#include <stdio.h>
+#include <unistd.h>
 int main(int arc, char ** argv){
     if(arc < 2) {
         printf("no argument given ./cart file-name\n");
         return -1;
     }
     CART cart = load_cart(argv[1]);
-    // printing the first 400 instraction starting from 0x100
+    //printing the first 400 instraction starting from 0x100
+    sleep(10);
+    // printf("printing the first 400 instraction starting from 0x100\n");
     // int i;
     // u16 addr = 0x0100;
     // while(i < 400){
@@ -21,6 +24,6 @@ int main(int arc, char ** argv){
 
     //     i++;
     // }
-    free(cart.roms_data);
+    // free(cart.roms_data);
     return 0;
 }

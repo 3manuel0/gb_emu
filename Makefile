@@ -2,7 +2,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra -std=c11
 
 # List of object files
-OBJS = main.o cart.o
+OBJS = main.o cart.o cpu.o
 
 # Output binary name
 TARGET = main
