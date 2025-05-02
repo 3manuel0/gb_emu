@@ -149,7 +149,7 @@ static const char * getmanif[] = {
     [0xF0] = "A Wave",
     [0xF3] = "Extreme Entertainment",
     [0xFF] = "LJN"
-    };
+};
 
 static const char * cart_type[] = {
     [0x00] = "ROM ONLY",
