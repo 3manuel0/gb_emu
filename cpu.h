@@ -4,8 +4,7 @@
     #include "def.h"
 
     typedef struct {
-        u8 A;//Accumulator
-        u8 F;//Flag
+        u16 AF;//Accumulator & Flags
         u16 BC;
         u16 DE;
         u16 HL;
