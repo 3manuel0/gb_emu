@@ -4,7 +4,8 @@
     #include "def.h"
 
     typedef struct {
-        u16 AF;//Accumulator & Flags
+        u8 A;//Accumulator
+        u8 F;//Flag
         u16 BC;
         u16 DE;
         u16 HL;
@@ -13,6 +14,6 @@
     }CPU_REGS;
 
 
-
+    void run_inst(CPU_REGS * cpu_reg, u8 * roms_data);
 
 #endif
