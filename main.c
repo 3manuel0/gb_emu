@@ -31,9 +31,12 @@ int main(int arc, char ** argv){
         ClearBackground(WHITE);
         u32 j = 0;
         for(u32 i = cpu.PC; i < 0x9BFF; i+=2){
-            printf("0x%.2x, 0x%.2x, %d\n", i, i + 1, j);
-            draw_tile(cart.roms_data[i], cart.roms_data[i + 1], &j);
+            // if(j <= 32 * 4){
+                // printf("0x%.2x, 0x%.2x, %d\n", i, i + 1, j);
+                draw_tile(cart.roms_data[i], cart.roms_data[i + 1], &j);
+            // }
         }
+
         EndDrawing();
     }
     free(cart.roms_data);
