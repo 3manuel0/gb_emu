@@ -1,6 +1,6 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -std=c11
-
+CFLAGS = -Wall -Wextra -Werror -std=c11
+Links = -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
 # List of object files
 OBJS = main.o cart.o cpu.o ppu.o
 
@@ -12,7 +12,7 @@ all: $(TARGET)
 
 # Link object files to create the binary
 $(TARGET): $(OBJS)
-	$(CC) $(OBJS) -o $(TARGET) -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
+	$(CC) $(OBJS) -o $(TARGET) $(Links)
 
 # Compile .c files into .o files
 %.o: %.c
@@ -20,4 +20,4 @@ $(TARGET): $(OBJS)
 
 # Clean up build files
 clean:
-	rm -f *.o $(TARGET)
+	rm -f *.o

@@ -7,7 +7,7 @@
 
 int main(int arc, char ** argv){
     if(arc < 2) {
-        printf("no argument given ./cart file-name\n");
+        printf("no argument given ./gb file-name\n");
         return -1;
     }
     CART cart = load_cart(argv[1]);
@@ -15,7 +15,6 @@ int main(int arc, char ** argv){
     //printing the first 400 instraction starting from 0x100
     // sleep(10);
     printf("printing the first 400 instraction starting from 0x100\n");
-    int i;
     cpu.PC = 0x0100;
     // while(i < 400){
     //     run_inst(&cpu, cart.roms_data);
@@ -31,10 +30,10 @@ int main(int arc, char ** argv){
         ClearBackground(WHITE);
         u32 j = 0;
         for(u32 i = cpu.PC; i < 0x9BFF; i+=2){
-            // if(j <= 32 * 4){
+            if(j <= 32){
                 // printf("0x%.2x, 0x%.2x, %d\n", i, i + 1, j);
                 draw_tile(cart.roms_data[i], cart.roms_data[i + 1], &j);
-            // }
+            }
         }
 
         EndDrawing();

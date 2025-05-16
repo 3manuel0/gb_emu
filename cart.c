@@ -189,7 +189,7 @@ CART load_cart(char * cartName){
 
     size_t sz;
 
-    char newCode[3] = "00";
+    u8 newCode[3] = "00";
 
     FILE * f = fopen(cartName, "rb");
 
