@@ -12,7 +12,7 @@
         u16 PC;//Program Counter/Pointer
     }CPU_REGS;
 
-
+    void number_of_cycles(int t);
     void run_inst(CPU_REGS * cpu_reg, u8 * roms_data);
 
 #endif

@@ -12,5 +12,4 @@
 
     CART load_cart(char * cartName);
 
-
 #endif
