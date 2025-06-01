@@ -1,44 +1,53 @@
 #include "cpu.h"
 #include <stdio.h>
 
+// add cycle time to emulate the gb cpu cycles
 void number_of_cycles(int t){
     printf("Cycle to wait for %d\n", t);
     return;
 }
 
-void run_inst(CPU_REGS * cpu_reg, u8 * roms_data){
-    switch (roms_data[cpu_reg->PC]) {
+void run_inst(CPU_REGS * cpu_reg, u8 * memory){
+    switch (memory[cpu_reg->PC]) {
         case 0x00:
-            printf("0x%2x:the zero instruction 0x%.2x \n", cpu_reg->PC, roms_data[cpu_reg->PC]);
+            // NOP
+            printf("0x%2x:the zero instruction 0x%.2x \n", cpu_reg->PC, memory[cpu_reg->PC]);
             cpu_reg->PC++;
-            // add cycle time to emulate the gb cpu cycles
             number_of_cycles(4);
             break;
         case 0x01: 
-            cpu_reg->BC = (roms_data[cpu_reg->PC + 1] | (roms_data[cpu_reg->PC + 2] << 8));
-            printf("0x%.2x op : %.2x BC = %x\n", cpu_reg->PC, roms_data[cpu_reg->PC] , cpu_reg->BC);
+            // LD BC, n16
+            cpu_reg->BC = (memory[cpu_reg->PC + 1] | (memory[cpu_reg->PC + 2] << 8));
+            printf("0x%.2x op : %.2x BC = %x\n", cpu_reg->PC, memory[cpu_reg->PC] , cpu_reg->BC);
             cpu_reg->PC += 3;
             number_of_cycles(12);
             break;
-        case 0x02: 
-            cpu_reg->BC = cpu_reg->AF;
-            printf("0x%.2x op : %x new_BC = %x\n", cpu_reg->PC, roms_data[cpu_reg->PC], cpu_reg->BC); 
+        case 0x02:
+            // LD [BC], A 
+            memory[cpu_reg->BC] = (cpu_reg->AF >> 8) & 0xFF;
+            printf("0x%.2x op : %x BC = %x\n", cpu_reg->PC, memory[cpu_reg->PC], cpu_reg->BC); 
             cpu_reg->PC ++;
             number_of_cycles(8);
             break;
-        case 0x03: 
+        case 0x03:
+            // INC BC  
             cpu_reg->BC++;
-            printf("0x%.2x op : %x inc_BC = %x\n", cpu_reg->PC, roms_data[cpu_reg->PC], cpu_reg->BC); 
+            printf("0x%.2x op : %x BC = %x\n", cpu_reg->PC, memory[cpu_reg->PC], cpu_reg->BC); 
             cpu_reg->PC ++;
             number_of_cycles(8);
             break;            
         case 0xc3: 
-            printf("0x%.2x op : %x afop: %x\n", cpu_reg->PC,roms_data[cpu_reg->PC], (u16) (roms_data[cpu_reg->PC + 1] | (roms_data[cpu_reg->PC + 2] << 8))); 
-            cpu_reg->PC = (roms_data[cpu_reg->PC + 1] | (roms_data[cpu_reg->PC + 2] << 8));
+            printf("0x%.2x op : %x afop: %x\n", cpu_reg->PC,memory[cpu_reg->PC], (u16) (memory[cpu_reg->PC + 1] | (memory[cpu_reg->PC + 2] << 8))); 
+            cpu_reg->PC = (memory[cpu_reg->PC + 1] | (memory[cpu_reg->PC + 2] << 8));
             number_of_cycles(16);
             break;
+        case 0xfe: 
+            printf("0x%.2x op : %x afop: %x\n", cpu_reg->PC,memory[cpu_reg->PC],(memory[cpu_reg->PC + 1])); 
+            number_of_cycles(8);
+            cpu_reg->PC += 2;
+            break;
         default: 
-            printf("0x%.2x : 0x%.2x\n", cpu_reg->PC, roms_data[cpu_reg->PC]); 
+            printf("0x%.2x : 0x%.2x\n", cpu_reg->PC, memory[cpu_reg->PC]); 
             cpu_reg->PC++;
             break;
     }

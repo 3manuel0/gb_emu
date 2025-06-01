@@ -1,4 +1,5 @@
 #include "cart.h"
+#include <stdio.h>
 
 static const char * getmanif[] = {
     [0x00]  = "None",
@@ -196,18 +197,23 @@ CART load_cart(char * cartName){
     CART cart = {0};
 
     if(f == NULL){
-        printf("can't open file");
-        exit(-1);
+        fprintf(stderr, "can't open file\n");
         return cart;
     }
 
-    fseek(f, 0L, SEEK_END);
+    fseek(f, 0, SEEK_END);
 
     sz = ftell(f);
 
     rewind(f);
 
     cart.roms_data = malloc(sz);
+    // cart.roms_data = NULL;
+
+    if(cart.roms_data == NULL){
+        fprintf(stderr, "error allocating memory buy more RAM\n");
+        return cart;
+    }
 
     int str = 0;
     for (size_t i = 0; i < sz; i++) {
@@ -215,7 +221,7 @@ CART load_cart(char * cartName){
         // extracting rom title
         if(i >= 0x134 && i < 0x143 ){
 
-            cart.Title[str] = ch;
+            cart.title[str] = ch;
             str++;
         }
 
@@ -240,7 +246,7 @@ CART load_cart(char * cartName){
     // printing the header
     printf("-------header----------------\n"); 
     printf("file size : %ld\n", sz);
-    printf("Title: %s\n", cart.Title);
+    printf("title: %s\n", cart.title);
     printf("cgb: %x\n", cart.cgb);
     printf("manufacturer: %s %02x\n", cart.manif  == 0x33 ? "rom using new code" : getmanif[cart.manif], cart.manif );
     printf("New Code: %c%c\n", newCode[0], newCode[1]);

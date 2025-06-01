@@ -4,6 +4,8 @@
     #include <stdint.h>
     #include <stdlib.h>
     #include <stdio.h>
+    #include <string.h>
+    #include <unistd.h>
     #include <raylib.h>
 
     typedef uint8_t u8;
