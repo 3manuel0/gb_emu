@@ -8,7 +8,7 @@ void draw_tile(u8 fbyte, u8 sbyte, u32 * j){
 
     for(i8 i = 7; i >= 0; i--){
         u8 pixel_color = ((fbyte >> i) & 1) | (((sbyte >> i) & 1) << 1);
-        printf("%d %d %d\n", pixel_color, i, *j);
+        // printf("%d %d %d\n", pixel_color, i, *j);
         switch (pixel_color) {
             case 3:
                 DrawRectangle(*j * pixel_size, offset * pixel_size , pixel_size, pixel_size, BLACK);

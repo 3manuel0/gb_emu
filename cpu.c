@@ -37,15 +37,18 @@ void run_inst(CPU_REGS * cpu_reg, u8 * memory){
             number_of_cycles(8);
             break;            
         case 0xc3: 
+            // JP a16
             printf("0x%.2x op : %x afop: %x\n", cpu_reg->PC,memory[cpu_reg->PC], (u16) (memory[cpu_reg->PC + 1] | (memory[cpu_reg->PC + 2] << 8))); 
             cpu_reg->PC = (memory[cpu_reg->PC + 1] | (memory[cpu_reg->PC + 2] << 8));
             number_of_cycles(16);
             break;
-        case 0xfe: 
-            printf("0x%.2x op : %x afop: %x\n", cpu_reg->PC,memory[cpu_reg->PC],(memory[cpu_reg->PC + 1])); 
+        case 0xfe:{ 
+            u8 cmp = ((cpu_reg->AF >> 8) & 0xff) - memory[cpu_reg->PC + 1];
+            printf("0x%.2x op : %x afop: %x %d diffrance\n", cpu_reg->PC,memory[cpu_reg->PC],memory[cpu_reg->PC + 1], cmp); 
             number_of_cycles(8);
             cpu_reg->PC += 2;
             break;
+        }
         default: 
             printf("0x%.2x : 0x%.2x\n", cpu_reg->PC, memory[cpu_reg->PC]); 
             cpu_reg->PC++;
