@@ -1,5 +1,5 @@
 #include "cpu.h"
-#include <stdio.h>
+
 
 // add cycle time to emulate the gb cpu cycles
 void number_of_cycles(int t){
@@ -24,7 +24,7 @@ void run_inst(CPU_REGS * cpu_reg, u8 * memory){
             break;
         case 0x02:
             // LD [BC], A 
-            memory[cpu_reg->BC] = (cpu_reg->AF >> 8) & 0xFF;
+            memory[cpu_reg->BC] = (u8)(cpu_reg->AF >> 8) & 0xFF;
             printf("0x%.2x op : %x BC = %x\n", cpu_reg->PC, memory[cpu_reg->PC], cpu_reg->BC); 
             cpu_reg->PC ++;
             number_of_cycles(8);
@@ -35,7 +35,16 @@ void run_inst(CPU_REGS * cpu_reg, u8 * memory){
             printf("0x%.2x op : %x BC = %x\n", cpu_reg->PC, memory[cpu_reg->PC], cpu_reg->BC); 
             cpu_reg->PC ++;
             number_of_cycles(8);
-            break;            
+            break;  
+        case 0x04:
+            // INC B 
+            // TODO:FINISH THIS
+            cpu_reg->BC += 0x0100;
+            // incomplet testing
+            if(*((u8 *)(&cpu_reg->BC) + 1) == 0){
+                *(u8 *)(&cpu_reg->AF) = (1 << 7) | (1 << 5);
+            }
+            break;          
         case 0xc3: 
             // JP a16
             printf("0x%.2x op : %x afop: %x\n", cpu_reg->PC,memory[cpu_reg->PC], (u16) (memory[cpu_reg->PC + 1] | (memory[cpu_reg->PC + 2] << 8))); 

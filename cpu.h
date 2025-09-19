@@ -2,7 +2,6 @@
 
 #ifdef CPU_H
     #include "def.h"
-
     typedef struct {
         u16 AF;//Accumulator & Flags
         u16 BC;

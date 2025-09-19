@@ -40,12 +40,12 @@ int main(int arc, char ** argv){
     // nintendo logo 0x0104 to 0x0133
     while(!WindowShouldClose()){
         BeginDrawing();
-        printf("%x\n", cpu.PC);
+        // printf("%x\n", cpu.PC);
         // cpu.PC = 0x9800;
         ClearBackground(WHITE);
         u32 j = 0;
-        for(u32 i = cpu.PC; i < 0x9BFF; i+=2){
-            if(j <= 32){
+        for(u32 i = cpu.PC; i < 0x9FFF; i+=2){
+            if(j <= 50){
                 // printf("0x%.2x, 0x%.2x, %d\n", i, i + 1, j);
                 draw_tile(memory[i], memory[i + 1], &j);
             }
